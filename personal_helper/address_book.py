@@ -6,7 +6,6 @@ from personal_helper.field import Field
 from personal_helper.email import Email
 
 
-
 class AddressBook(UserDict):
     def add_address(self, address):
         if isinstance(address.name.value, str):
@@ -90,5 +89,12 @@ class Record:
         email = f", email: {self.email}" if self.email else ""
         return f"Contact name: {self.name.value}, phones: {phones}{birthday_str}{email}"
 
+
+
 class Name(Field):
     pass
+
+
+class Email():
+    pass
+
