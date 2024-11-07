@@ -1,5 +1,2 @@
-
-
-
-class Notes():
+class Notes:
     pass
