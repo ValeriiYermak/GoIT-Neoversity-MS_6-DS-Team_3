@@ -25,7 +25,6 @@ def load_data(filename="addressbook.pkl"):
     except FileNotFoundError:
         return AddressBook()
 
-
 def save_data(book, filename="addressbook.pkl"):
     with open(filename, "wb") as f:
         pickle.dump(book, f)
@@ -47,7 +46,6 @@ def main():
             print("How can I help you?")
 
         elif command == "add":  # ADD #
-
             if len(args) < 2:
                 print("Error: Input requires at least two arguments: name and phone.")
                 continue
@@ -159,6 +157,7 @@ def main():
                         print(f"Phone number {old_phone} not found for {name}.")
                 else:
                     print(f"Error: Contact '{name}' not found.")
+
 
         elif command == "show_phone":  # Find phone number
             if not args:
@@ -412,3 +411,4 @@ def main():
 
         else:
             print("Error: Invalid command. Please try again.")
+
