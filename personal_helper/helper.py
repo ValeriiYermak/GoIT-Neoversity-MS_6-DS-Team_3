@@ -25,6 +25,7 @@ def load_data(filename="addressbook.pkl"):
     except FileNotFoundError:
         return AddressBook()
 
+
 def save_data(book, filename="addressbook.pkl"):
     with open(filename, "wb") as f:
         pickle.dump(book, f)
@@ -67,7 +68,7 @@ def main():
                 elif re.match(r"\d{2}\.\d{2}\.\d{4}$", arg):  # check if it's a birthday
                     birthday = arg
                 elif re.match(
-                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", arg
+                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", arg
                 ):  # check if it's an email
                     email = arg
                 else:
@@ -112,7 +113,7 @@ def main():
                         print("Error: Invalid birthday format. Expected DD.MM.YYYY.")
                 if email:
                     if re.match(
-                        r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", email
+                        r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email
                     ):
                         contact.add_email(email)
                         print(f"Email {email} added to {name}.")
@@ -139,6 +140,23 @@ def main():
                     f"and address: {address if address else 'N/A'}."
                 )
 
+        elif command == "change_name":
+            if len(args) < 2 or "|" not in " ".join(args):
+                print("Error: Provide old name and new name.")
+                continue
+            full_input = " ".join(args)
+            if "|" not in full_input:
+                print("Error: Provide old name and new name.")
+                continue
+            old_name, new_name = full_input.split("|", 1)
+            old_name = old_name.strip()
+            new_name = new_name.strip()
+
+            if old_name and new_name:
+                book.change_name(old_name, new_name)
+            else:
+                print("Error: Provide both old name and new name.")  # Change name
+
         elif command == "change_phone":  # Change phone number
             if len(args) < 3:
                 print("Error: Provide name, old phone, and new phone.")
@@ -158,7 +176,6 @@ def main():
                 else:
                     print(f"Error: Contact '{name}' not found.")
 
-
         elif command == "show_phone":  # Find phone number
             if not args:
                 print("Error: Provide a name.")
@@ -170,17 +187,22 @@ def main():
                 else:
                     print(f"Error: Contact '{name}' not found.")
 
-        elif command == "del_phone":  # Delete phone number
-            if not args:
-                print("Error: Input the contact name and phone number to delete.")
+        elif command == "del_phone":  # Delete phone number from contact
+            try:
+                name = args[0]
+                phone_number = args[1]  # Use the second argument as the phone number
+                if not name or not phone_number:
+                    print("Error: Both contact name and phone number are required.")
+                    continue
+            except IndexError:
+                print("Error: Both contact name and phone number are required.")
                 continue
-            name = args[0]
-            phone_number = args[1]
-            contact = book.find_address(name)
-            if contact:
-                contact.delete_phone(phone_number)  # Викликаємо метод для видалення
+            if book.delete_phone(name, phone_number):
+                print(f"Phone number '{phone_number}' deleted from contact '{name}'.")
             else:
-                print(f"Error: Contact '{name}' not found.")
+                print(
+                    f"Error: Contact '{name}' or phone number '{phone_number}' not found."
+                )
 
         elif command == "show_all":
             if not book.data:
@@ -272,6 +294,16 @@ def main():
                 except ValueError:
                     print("Error: Please specify a valid number of days.")
 
+        elif command == "del_birthday":
+            if not args:
+                print("Error: Input a name.")
+                continue
+            name = args[0]
+            if book.delete_birthday(name):
+                print(f"Birthday of {name} deleted.")
+            else:
+                print(f"Error: Contact '{name}' not found.")
+
         elif command == "add_email":
             if not args or len(args) < 2:
                 print("Error: Input name and email.")
@@ -279,7 +311,7 @@ def main():
             name, email = args[0], args[1]
             contact = book.find_address(name)
             if contact:
-                if re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", email):
+                if re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
                     contact.add_email(email)
                 else:
                     print("Error: Invalid email format. Use email@domain.com")
@@ -307,7 +339,7 @@ def main():
             contact = book.find_address(name)
             if contact:
                 if re.match(
-                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", new_email
+                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", new_email
                 ):
                     contact.add_email(new_email)
                 else:
@@ -355,10 +387,13 @@ def main():
                 print(f"Error: Contact '{name}' not found.")
 
         elif command == "change_address":  # Change address
-            if len(args) < 3:
-                print("Error: Provide name, old address, and new address.")
+            if len(args) < 3 or "|" not in args:
+                print("Error: Provide name, old address, |, and new address.")
                 continue
-            name, old_address, new_address = args
+            separator_index = args.index("|")
+            name = args[0]
+            old_address = " ".join(args[1:separator_index])
+            new_address = " ".join(args[separator_index + 1 :])
             contact = book.find_address(name)
             if contact:
                 if contact.address == old_address:  # Check if the old address matches
@@ -384,31 +419,32 @@ def main():
 
         elif command == "help":
             print("Available commands:")
-            print('  "add_phone" - add a new contact')  # +
-            print('  "add_birthday" - add a birthday to a contact')  # +
-            print('  "add_email" - add an email to a contact')  # +
-            print('  "add_address" - add a address to a contact')  # +
+            print('  "add_phone" - add a new contact')
+            print('  "add_birthday" - add a birthday to a contact')
+            print('  "add_email" - add an email to a contact')
+            print('  "add_address" - add a address to a contact')
 
-            print('  "show_all" - show all contacts')  # +
-            print('  "show_phone" - show a phone number')  # +
-            print('  "show_birthday" - show a birthday of a contact')  # +
-            print('  "show_email" - show an email of a contact')  # +
-            print('  "show_address" - show a address for contact')  # +
-            print('  "show_birthdays" - show upcoming birthdays')  # +
+            print('  "show_all" - show all contacts')
+            print('  "show_phone" - show a phone number')
+            print('  "show_birthday" - show a birthday of a contact')
+            print('  "show_email" - show an email of a contact')
+            print('  "show_address" - show a address for contact')
+            print('  "show_birthdays" - show upcoming birthdays')
 
-            print('  "change_phone" - change a phone number')  # +
-            print('  "change_birthday" - change a birthday of a contact')  # +
-            print('  "change_email" - change an email of a contact')  # +
-            print('  "change_address" - change a address for contact')  # +
+            print('  "change_name" - change a contact name')
+            print('  "change_phone" - change a phone number')
+            print('  "change_birthday" - change a birthday of a contact')
+            print('  "change_email" - change an email of a contact')
+            print('  "change_address" - change a address for contact')
 
-            print('  "del_contact" - remove a phone number')  # +
-            print('  "del_phone" - remove a address from contact')  # +
-            print('  "del_email" - remove a email from a contact')  # +
-            print('  "del_address" - remove a address from contact')  # +
+            print('  "del_contact" - remove a contact')
+            print('  "del_phone" - remove a phone from contact')
+            print('  "del_birthday" - remove a birthday from a contact')
+            print('  "del_email" - remove a email from a contact')
+            print('  "del_address" - remove a address from contact')
 
-            print('  "help" - show this help message')  # +
-            print('  "exit"/"cancel" - exit the program')  # +
+            print('  "help" - show this help message')
+            print('  "exit"/"cancel" - exit the program')
 
         else:
             print("Error: Invalid command. Please try again.")
-

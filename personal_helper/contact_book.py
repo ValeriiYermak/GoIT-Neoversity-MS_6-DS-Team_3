@@ -69,6 +69,36 @@ class AddressBook(UserDict):
         else:
             print(f"Error: Contact {name} not found.")
 
+    def delete_phone(self, name, phone_number):
+        if name in self.data:
+            contact = self.data[name]
+            if contact.phones.find_phone(phone_number):
+                contact.delete_phone(phone_number)
+                return True
+            else:
+                print(f"Error: Phone number '{phone_number}' not found for contact '{name}'.")
+        else:
+            print(f"Error: Contact '{name}' not found.")
+        return False
+
+    def delete_birthday(self, name):
+        if name in self.data:
+            contact = self.data[name]
+            contact.delete_birthday()
+        else:
+            print(f"Error: Contact '{name}' not found.")
+
+    def change_name(self, old_name, new_name):
+        old_name = old_name.strip().lower()
+        new_name = new_name.strip()
+        for contact in self.data.values():
+            if contact.name.value.lower() == old_name:
+                contact.name.value = new_name
+                print(f"Name changed from {(old_name.title())} to {new_name}")
+                return
+        print(f"Error: Contact '{old_name}' not found.")
+
+
 
 class Record:
     def __init__(self, name, phones=None, birthday=None, email=None, address=None):
@@ -81,7 +111,7 @@ class Record:
         self.address = address
 
     def add_email(self, email):
-        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", email):
+        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
             print(
                 "Error: Invalid email format. Please enter a valid email email@domain.com"
             )
@@ -97,10 +127,10 @@ class Record:
         else:
             self.email.email = email  # replace the old email with the new one
 
-        print(f"Emaaaaail {email} added to {self.name.value}.")
+        print(f"Emil {email} added to {self.name.value}.")
 
     def change_email(self, new_email):
-        if re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$", new_email):
+        if re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", new_email):
             self.email = new_email
             print(f"Email successfully updated to {new_email}.")
         else:
@@ -150,7 +180,6 @@ class Record:
             self.phones.remove_phone(
                 phone_number
             )  # Use the Phone class to remove the phone number
-            print(f"Phone number {phone_number} deleted from {self.name}.")
         else:
             print(f"Error: Phone number {phone_number} not found for {self.name}.")
 
@@ -182,6 +211,13 @@ class Record:
             )
         else:
             print(f"Error: No address to remove for {self.name.value}.")
+
+    def delete_birthday(self):
+        if self.birthday:
+            self.birthday = None
+            print(f"Birthday for {self.name.value} has been removed.")
+        else:
+            print(f"Error: No birthday to remove for {self.name.value}.")
 
     def __str__(self):
         phones = ", ".join(self.phones.value) if self.phones else ""
