@@ -1,1 +1,5 @@
 addressbook.pkl
+.env
+env
+.venv
+.idea
