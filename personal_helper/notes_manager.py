@@ -1,68 +1,82 @@
+from personal_helper.storage import Storage
+from notes import Note
+from colorama import Fore
 from prettytable import PrettyTable
-from colorama import Fore, Style
-from storage import Storage
-
-NOTES_FILE = "notes.json"
-
-class Note:
-    def __init__(self, content, tags=None):
-        self.content = content
-        self.tags = tags if tags else []
-
-    def to_dict(self):
-        return {"Content": self.content, "Tags": self.tags}
 
 class NotesManager:
     def __init__(self):
-        self.notes = self.load_notes()
+        self.notes = Storage.load_notes()
 
-    def load_notes(self):
-        notes_data = Storage.load_data(NOTES_FILE)
-        return [Note(**note) for note in notes_data]
-
-    def save_notes(self):
-        notes_data = [note.to_dict() for note in self.notes]
-        Storage.save_data(notes_data, NOTES_FILE)
-
-    def add_note(self, content, tags=None):
-        new_note = Note(content, tags)
+    def add_note(self, title, content, tags=None):
+        new_note = Note(title=title, content=content, tags=tags)
         self.notes.append(new_note)
-        self.save_notes()
-        print(Fore.GREEN + "Нотатку додано успішно!" + Style.RESET_ALL)
+        Storage.save_notes(self.notes)
+        print(Fore.GREEN + "Note successfully added.")
 
-    def edit_note(self, index, new_content=None, new_tags=None):
-        try:
-            note = self.notes[index]
-            if new_content: note.content = new_content
-            if new_tags is not None: note.tags = new_tags
-            self.save_notes()
-            print(Fore.GREEN + "Нотатку оновлено успішно!" + Style.RESET_ALL)
-        except IndexError:
-            print(Fore.RED + "Нотатку не знайдено!" + Style.RESET_ALL)
+    def edit_note(self, title, field, new_value):
+        note = self.find_note_by_title(title)
+        if note:
+            setattr(note, field, new_value)
+            Storage.save_notes(self.notes)
+            print(Fore.GREEN + f"Note with title '{title}' updated.")
+        else:
+            print(Fore.RED + "Note hasn't been found.")
 
-    def delete_note(self, index):
-        try:
-            self.notes.pop(index)
-            self.save_notes()
-            print(Fore.GREEN + "Нотатку видалено успішно!" + Style.RESET_ALL)
-        except IndexError:
-            print(Fore.RED + "Нотатку не знайдено!" + Style.RESET_ALL)
+    def delete_note_by_title(self, title):
+        for note in self.notes:
+            if note.title == title:
+                self.notes.remove(note)
+                Storage.save_notes(self.notes)
+                print(Fore.GREEN + f"Note with title '{title}' deleted.")
+                return
+        print(Fore.RED + f"Note with title '{title}' hasn't been found.")
 
-    def show_notes(self):
+    def find_note_by_title(self, title):
+        for note in self.notes:
+            if note.title == title:
+                return note
+        print(Fore.RED + f"Note with title '{title}' hasn't been found.")
+        return None
+
+    def display_all_notes(self):
+        if not self.notes:
+            print(Fore.RED + "No notes to display.")
+            return
+
         table = PrettyTable()
-        table.field_names = ["Index", "Content", "Tags"]
-        for i, note in enumerate(self.notes):
-            table.add_row([i, note.content, ", ".join(note.tags)])
+        table.field_names = ["Title", "Content", "Tags"]
+        for note in self.notes:
+            tags_formatted = ", ".join(note.tags) if note.tags else "Nothing..."
+            table.add_row([note.title, note.content, tags_formatted])
         print(table)
 
-    def search_by_tag(self, tag):
-        table = PrettyTable()
-        table.field_names = ["Index", "Content", "Tags"]
-        for i, note in enumerate(self.notes):
-            if tag in note.tags:
-                table.add_row([i, note.content, ", ".join(note.tags)])
-        if table.rows:
-            print(Fore.GREEN + f"Нотатки з тегом '{tag}':" + Style.RESET_ALL)
+    def find_notes_by_tag(self, tag):
+        # Фільтруємо нотатки за тегом
+        results = [note for note in self.notes if tag in note.tags]
+        
+        if results:
+            # Відображаємо результати у вигляді таблиці
+            table = PrettyTable()
+            table.field_names = ["Title", "Content", "Tags"]
+            for note in results:
+                tags_formatted = ", ".join(note.tags) if note.tags else "Nothing..."
+                table.add_row([note.title, note.content, tags_formatted])
+            print(Fore.GREEN + f"Notes with the following tag '{tag}' found:")
             print(table)
         else:
-            print(Fore.YELLOW + f"Немає нотаток з тегом '{tag}'." + Style.RESET_ALL)
+            print(Fore.RED + f"No notes with tag '{tag}' found.")
+    
+    def sort_notes_by_tag(self):
+        sorted_notes = sorted(self.notes, key=lambda note: note.tags[0].lower() if note.tags else "")
+        
+        if sorted_notes:
+            # Відображення відсортованих нотаток у вигляді таблиці
+            table = PrettyTable()
+            table.field_names = ["Title", "Content", "Tags"]
+            for note in sorted_notes:
+                tags_formatted = ", ".join(note.tags) if note.tags else "Немає"
+                table.add_row([note.title, note.content, tags_formatted])
+            print(Fore.GREEN + "Notes sorted by tags:")
+            print(table)
+        else:
+            print(Fore.RED + "No notes to sort.")
