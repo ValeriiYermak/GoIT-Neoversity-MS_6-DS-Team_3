@@ -1,3 +1,4 @@
+
 class Note:
     def __init__(self, title, content, tags=None):
         self.title = title
@@ -12,3 +13,4 @@ class Note:
 
     def edit_tags(self, new_tags):
         self.tags = new_tags
+
