@@ -38,4 +38,3 @@ def normalize_phone(number):
         return "+38" + number[1:]  # + and 10 numbers, but the first number is 0
     else:
         return f"Invalid phone number: {number}. The number must have not less than 10 digits."
-    return None

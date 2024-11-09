@@ -1,3 +1,6 @@
+from personal_helper.colorizer import Colorizer
+
+
 def input_error(func):
     def wrapper(*args, **kwargs):
         try:
@@ -5,6 +8,6 @@ def input_error(func):
         except AttributeError as e:
             return f"Error: {str(e)}"
         except Exception as e:
-            return f"An unexpected error occurred: {str(e)}"
+            return Colorizer.error(f"An unexpected error occurred: {str(e)}")
 
     return wrapper

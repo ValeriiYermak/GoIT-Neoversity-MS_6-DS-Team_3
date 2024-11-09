@@ -1,5 +1,6 @@
-from personal_helper.validators import normalize_phone
-from personal_helper.field import Field
+from validators import normalize_phone
+from field import Field
+from colorizer import Colorizer
 
 
 class Phone(Field):
@@ -15,8 +16,13 @@ class Phone(Field):
                 self.value.append(normalized_phone)
             else:
                 raise ValueError(
-                    f"Invalid phone number: {number}. The number must have not less than 10 digits."
+                    Colorizer.error(
+                        f"Invalid phone number: {number}. The number must have not less than 10 digits."
+                    )
                 )
+
+    def __iter__(self):
+        return iter(self.value)
 
     def add_phone(self, number):
         normalized_number = normalize_phone(number)
@@ -27,7 +33,9 @@ class Phone(Field):
                 self.value.append(normalized_number)
         else:
             raise ValueError(
-                f"Invalid phone number: {number}. The number must have not less than 10 digits."
+                Colorizer.error(
+                    f"Invalid phone number: {number}. The number must have not less than 10 digits."
+                )
             )
 
     def find_phone(self, number):
@@ -45,7 +53,9 @@ class Phone(Field):
                     return True
                 else:
                     raise ValueError(
-                        f"Invalid new phone number: {new_number}. The number must have not less than 10 digits."
+                        Colorizer.error(
+                            f"Invalid new phone number: {new_number}. The number must have not less than 10 digits."
+                        )
                     )
         return False  # return False if the old number is not found
 
@@ -54,4 +64,4 @@ class Phone(Field):
         if normalized_number in self.value:
             self.value.remove(normalized_number)  # remove the phone number
         else:
-            print(f"Error: Phone number {number} not found.")
+            print(Colorizer.error(f"Error: Phone number {number} not found."))
