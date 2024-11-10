@@ -1,4 +1,5 @@
 from prompt_toolkit import PromptSession
+#from prompt_toolkit.output import DummyOutput
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.formatted_text import HTML
 from console.colorizer import Colorizer, ColorizeType
@@ -25,6 +26,7 @@ def main_loop():
     session = PromptSession(completer=command_completer)
     print(Colorizer.highlight("HERE IS YOUR PERSONAL HELPER."))
     commands.display_command_menu()  # Display the command menu at the start
+    #session = PromptSession(completer=command_completer, output=DummyOutput())
     while True:
         try:
             user_input = session.prompt(HTML('<ansicyan>Enter command: </ansicyan>')).strip().split()

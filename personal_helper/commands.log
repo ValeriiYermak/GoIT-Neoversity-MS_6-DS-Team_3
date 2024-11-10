@@ -1,0 +1,23 @@
+add-contact Sergey 0504456587
+help
+hello
+add-birthday Sergey 24.03.1978
+show-birthday
+show-birthday Sergey
+find-contact
+help
+all-contacts
+help
+hello
+add-contact Sergey 0504459876
+add-contact
+add-contact Valeriy 0504454476
+find-contact Valeriy
+find-contact 0504454476
+add-note
+all-contacts
+change-contact Sergey phone 0504456587 0504456588
+all-contacts
+add-note Meeting talk discussion
+find-note-by-tag discussion
+show-all-notes

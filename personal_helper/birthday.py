@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
-from personal_helper.field import Field
-from personal_helper.errors import input_error
+from field import Field
+from errors import input_error
 
 
 class Birthday(Field):

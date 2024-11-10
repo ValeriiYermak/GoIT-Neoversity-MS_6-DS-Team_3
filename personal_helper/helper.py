@@ -384,7 +384,7 @@ def main():
 
         elif command == "help":
             print("Available commands:")
-            print('  "add_phone" - add a new contact')  # +
+            print('  "add_phone" - add a new contact')  # + 
             print('  "add_birthday" - add a birthday to a contact')  # +
             print('  "add_email" - add an email to a contact')  # +
             print('  "add_address" - add a address to a contact')  # +
