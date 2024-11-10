@@ -10,7 +10,7 @@ class ColorizeType:
 
 class Colorizer:
     """
-    Colorize text output with colorama
+    Colorize text output with colorama additioanal
     """
     init()
 

@@ -45,7 +45,7 @@ def command_help():
         ("find_note_by_tag", "find-note-by-tag [tag]", "Search for notes by a specific tag."),                
     ]
 
-    table = PrettyTable()
+    table = PrettyTable() #table
     table.field_names = ["Command", "Usage", "Description"]
     for command in commands_description:
         table.add_row(command)
