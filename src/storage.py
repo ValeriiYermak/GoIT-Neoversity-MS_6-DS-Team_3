@@ -1,3 +1,4 @@
+"""Module to store notes in JSON format"""
 import json
 from notes import Note
 from colorama import Fore
