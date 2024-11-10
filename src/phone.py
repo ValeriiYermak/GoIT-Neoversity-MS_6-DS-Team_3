@@ -1,3 +1,23 @@
+"""
+This module contains the Phone class, which represents a phone number for a contact.
+
+Attributes:
+    numbers (list): A list of phone numbers.
+    value (list): A list of normalized phone numbers.
+
+Methods:
+    _normalize_all_phones(self): Normalizes all phone numbers in the numbers list and adds them to the value list.
+    __iter__(self): Returns an iterator over the value list.
+    add_phone(self, number): Adds a phone number to the value list.
+    find_phone(self, number): Returns True if the phone number is in the value list, False otherwise.
+    edit_phone(self, old_number, new_number): Replaces the old phone number with the new one in the value list.
+    remove_phone(self, number): Removes the phone number from the value list.
+
+Classes:
+    Phone: A class that represents a phone number for a contact.
+"""
+
+
 from validators import normalize_phone
 from field import Field
 from colorizer import Colorizer

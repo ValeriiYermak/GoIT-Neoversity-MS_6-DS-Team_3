@@ -1,3 +1,7 @@
+"""
+This module contains the Birthday class, which represents a birthday for a contact.
+"""
+
 from datetime import datetime, timedelta
 from field import Field
 from errors import input_error

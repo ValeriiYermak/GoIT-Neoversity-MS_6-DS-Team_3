@@ -1,3 +1,12 @@
+"""
+This module contains functions to validate and normalize phone numbers.
+
+Functions:
+    normalize_phone(number): Normalize a phone number.
+"""
+
+
+
 import re
 
 

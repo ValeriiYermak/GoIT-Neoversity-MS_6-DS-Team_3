@@ -1,3 +1,63 @@
+"""
+contact_book.py
+
+This module contains the AddressBook class, which represents a collection of
+ contacts and provides methods for adding, finding, editing, and deleting
+ contacts.
+
+The AddressBook class has the following methods:
+- add_contact: Adds a new contact to the address book.
+- find_address: Finds a contact by name or phone number.
+- edit_address: Edits the address of a contact.
+- delete_contact: Deletes a contact from the address book.
+- save_data: Saves the address book data to a file.
+- load_data: Loads the address book data from a file.
+- change_address: Changes the address of a contact.
+
+The Record class represents a contact in the address book:
+The Record class has the following methods:
+- add_email: Adds an email to the contact.
+- remove_email: Removes an email from the contact.
+- add_birthday: Adds a birthday to the contact.
+- change_birthday: Changes the birthday of the contact.
+- add_number: Adds a phone number to the contact.
+- remove_number: Removes a phone number from the contact.
+- edit_number: Edits a phone number in the contact.
+- delete_phone: Deletes a phone number from the contact.
+- find_number: Finds a phone number in the contact.
+- add_address: Adds an address to the contact.
+- find_address: Finds an address in the contact.
+- change_address: Changes the address of the contact.
+- delete_address: Deletes an address from the contact.
+- delete_birthday: Deletes the birthday from the contact.
+
+The Phone class represents a phone number in the address book:
+The Phone class has the following methods:
+- add_phone: Adds a phone number to the contact.
+- find_phone: Finds a phone number in the contact.
+- edit_phone: Edits a phone number in the contact.
+- remove_phone: Removes a phone number from the contact.
+
+The Birthday class represents a birthday in the address book:
+The Birthday class has the following methods:
+- add_birthday: Adds a birthday to the contact.
+- change_birthday: Changes the birthday of the contact.
+- delete_birthday: Deletes the birthday from the contact.
+
+
+The AddressBook class uses the UserDict class from the collections module to
+represent the address book as a dictionary. The UserDict class provides a
+dictionary-like interface for accessing and modifying the address book data.
+
+The AddressBook class also uses the validators module to normalize phone numbers,
+and the phone, birthday, and email classes to represent contact information.
+The colorizer module provides a colorizer class for formatting output.
+The pickle module is used to save and load the address book data to and from a file.
+The AddressBook class also uses the re module to validate email addresses.
+The re module provides a regular expression pattern for validating email addresses.
+The AddressBook class also uses the pickle module to save and load the address book data to and from a file.
+"""
+
 from collections import UserDict
 from validators import normalize_phone
 from phone import Phone
@@ -41,7 +101,7 @@ class AddressBook(UserDict):
             # Search by name
             for record in self.data.values():
                 if (
-                    record.name.value.lower() == query.lower()
+                        record.name.value.lower() == query.lower()
                 ):  # Compare the query with the name.value
                     return record
         return None

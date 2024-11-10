@@ -1,3 +1,5 @@
+"""Error handling."""
+
 from colorizer import Colorizer
 
 

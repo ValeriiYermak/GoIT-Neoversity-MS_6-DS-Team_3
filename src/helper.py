@@ -1,3 +1,52 @@
+"""
+This module contains helper functions for the contact book application.
+
+Functions:
+    parse_input(user_input): Parse the user input into a command and arguments.
+    main(): The main function of the contact book application.
+
+This module imports the following modules:
+    re: Regular expression operations.
+    pickle: Module for pickling objects.
+    os: Module for operating system related functions.
+    prompt_toolkit: Module for command line interface.
+    colorizer: Module for colored text output.
+    validators: Module for validating input.
+    contact_book: Module for contact book operations.
+    birthday: Module for birthday operations.
+    contact_book: Module for email operations.
+    command_descrip: Module for displaying command descriptions.
+    notes_manager: Module for notes manager operations.
+
+This module defines the following classes:
+    AddressBook: Class representing a collection of contacts.
+    Record: Class representing a contact record.
+    Birthday: Class representing a birthday for a contact.
+    Email: Class representing an email for a contact.
+    NotesManager: Class for managing notes.
+
+This module also defines the following constants:
+    COMMANDS: List of available commands.
+    COMMAND_DESCRIPTIONS: Dictionary mapping commands to their descriptions.
+
+This module also defines the following functions:
+    parse_input(user_input): Parse the user input into a command and arguments.
+    main(): The main function of the contact book application.
+
+This module also defines the following variables:
+    notes_manager: The notes manager object.
+    COMMANDS: List of available commands.
+    command_completer: The command completer object.
+
+This module also defines the following constants:
+    COMMANDS: List of available commands.
+    command_completer: The command completer object.
+
+
+
+"""
+
+
 import re
 import pickle
 import os
