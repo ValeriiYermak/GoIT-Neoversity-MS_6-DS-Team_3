@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Test note",
+        "content": "Test content",
+        "tags": [
+            "testtag"
+        ]
+    },
+    {
+        "title": "test2",
+        "content": "test2",
+        "tags": [
+            "testtag2"
+        ]
+    },
+    {
+        "title": "test3",
+        "content": "test3",
+        "tags": [
+            "Testtag3"
+        ]
+    }
+]

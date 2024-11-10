@@ -1,6 +1,23 @@
-[tool.poetry.dependencies]
-python = "^3.12"
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-isort = "^5.12.0"
+[project]
+name = "personal_assistant"
+version = "0.1.0"
+description = "A command-line personal assistant for managing contacts and notes."
+authors = [
+    { name="Your Name", email="your.email@example.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["personal assistant", "contacts", "notes", "CLI"]
+
+dependencies = [
+    "colorama>=0.4.4",
+    "prettytable>=3.0.0"
+]
+
+[project.scripts]
+personal-assistant = "src.helper:main"
