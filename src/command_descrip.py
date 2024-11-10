@@ -1,8 +1,13 @@
 from prettytable import PrettyTable
 from colorizer import Colorizer
 
-
 def command_help():
+    """
+    Displays a table of available commands with their usage and description.
+    """
+
+    # List of tuples, each containing command details (command, usage, description)
+    headers = ["Command", "Usage", "Description"]
     commands_description = [
         ("help", "help", "Display a list of available commands with details."),
         ("hello", "hello", "Greet and interact with the bot."),
@@ -100,8 +105,19 @@ def command_help():
         ),
     ]
 
+    # Create a PrettyTable object to format the command list as a table
     table = PrettyTable()
-    table.field_names = ["Command", "Usage", "Description"]
+    # Set the headers for the table
+    table.field_names = headers
+    
+    # Align all columns to the left
+    table.align["Command"] = "l"
+    table.align["Usage"] = "l"
+    table.align["Description"] = "l"
+    
+    # Add each command description to the table
     for command in commands_description:
         table.add_row(command)
+
+    # Print the table with INFO color styling using the Colorizer class
     print(Colorizer.info(table))
