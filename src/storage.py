@@ -9,16 +9,12 @@ class Storage:
     @staticmethod
     def save_notes(notes, filename=NOTES_FILE):
         data = [
-            {
-                "title": note.title,
-                "content": note.content,
-                "tags": note.tags
-            }
+            {"title": note.title, "content": note.content, "tags": note.tags}
             for note in notes
         ]
         with open(filename, "w") as f:
             json.dump(data, f, indent=4)
-        print(Fore.GREEN + "Note successfully stored.")
+        # print(Fore.GREEN + "Note successfully stored.")
 
     @staticmethod
     def load_notes(filename=NOTES_FILE):

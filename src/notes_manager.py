@@ -3,6 +3,7 @@ from notes import Note
 from colorama import Fore
 from prettytable import PrettyTable
 
+
 class NotesManager:
     def __init__(self):
         self.notes = Storage.load_notes()
@@ -11,14 +12,14 @@ class NotesManager:
         new_note = Note(title=title, content=content, tags=tags)
         self.notes.append(new_note)
         Storage.save_notes(self.notes)
-        print(Fore.GREEN + "Note successfully added.")
+        # print(Fore.GREEN + "Note successfully added.")
 
     def edit_note(self, title, field, new_value):
         note = self.find_note_by_title(title)
         if note:
             setattr(note, field, new_value)
             Storage.save_notes(self.notes)
-            print(Fore.GREEN + f"Note with title '{title}' updated.")
+            # print(Fore.GREEN + f"Note with title '{title}' updated.")
         else:
             print(Fore.RED + "Note hasn't been found.")
 
@@ -52,8 +53,10 @@ class NotesManager:
 
     def find_notes_by_tag(self, tag):
         # Фільтруємо нотатки за тегом
-        results = [note for note in self.notes if tag in note.tags]
-        
+        results = [
+            note for note in self.notes if tag.lower() in [t.lower() for t in note.tags]
+        ]
+
         if results:
             # Відображаємо результати у вигляді таблиці
             table = PrettyTable()
@@ -65,10 +68,12 @@ class NotesManager:
             print(table)
         else:
             print(Fore.RED + f"No notes with tag '{tag}' found.")
-    
+
     def sort_notes_by_tag(self):
-        sorted_notes = sorted(self.notes, key=lambda note: note.tags[0].lower() if note.tags else "")
-        
+        sorted_notes = sorted(
+            self.notes, key=lambda note: note.tags[0].lower() if note.tags else ""
+        )
+
         if sorted_notes:
             # Відображення відсортованих нотаток у вигляді таблиці
             table = PrettyTable()
