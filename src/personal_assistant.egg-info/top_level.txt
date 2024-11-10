@@ -1,0 +1,15 @@
+__init__
+birthday
+colorizer
+command_descrip
+commands
+contact_book
+errors
+field
+helper
+main
+notes
+notes_manager
+phone
+storage
+validators
