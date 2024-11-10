@@ -1,4 +1,4 @@
-from personal_helper.storage import Storage
+from storage import Storage
 from notes import Note
 from colorama import Fore
 from prettytable import PrettyTable
