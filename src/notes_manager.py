@@ -1,3 +1,4 @@
+"""Module to manage notes within Personal Assistant bot"""
 from storage import Storage
 from notes import Note
 from colorama import Fore
