@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
-from personal_helper.field import Field
-from personal_helper.errors import input_error
+from field import Field
+from errors import input_error
+from colorizer import Colorizer
 
 
 class Birthday(Field):
@@ -13,7 +14,7 @@ class Birthday(Field):
             datetime.strptime(value, "%d.%m.%Y")
             return value  # Return the validated date
         except ValueError:
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+            raise ValueError(Colorizer.error("Invalid date format. Use DD.MM.YYYY"))
 
     @input_error
     @staticmethod
@@ -34,7 +35,7 @@ class Birthday(Field):
             self.value = validate_birthday
             return f"Birthday for {self.name.value} changed to {self.value}."
         except ValueError:
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+            raise ValueError(Colorizer.error("Invalid date format. Use DD.MM.YYYY"))
 
     def remove_birthday(self):
         self.value = None

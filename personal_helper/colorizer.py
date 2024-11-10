@@ -1,17 +1,20 @@
 from colorama import Fore, Style, init
 
+
 class ColorizeType:
-    INFO = 'info'
-    WARNING = 'warning'
-    ERROR = 'error'
-    SUCCESS = 'success'
-    HIGHLIGHT = 'highlight'
-    COMMANDLINE = 'commandline'
+    INFO = "info"
+    WARNING = "warning"
+    ERROR = "error"
+    SUCCESS = "success"
+    HIGHLIGHT = "highlight"
+    COMMANDLINE = "commandline"
+
 
 class Colorizer:
     """
     Colorize text output with colorama
     """
+
     init()
 
     INFO = Fore.WHITE
