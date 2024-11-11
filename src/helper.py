@@ -474,7 +474,7 @@ def main():
 
             elif command == "show_upcoming_birthdays":
                 if len(args) < 1:
-                    print("Error: Please specify the number of days after the command.")
+                    print(Colorizer.info("Please specify the number of days after the command."))
                 else:
                     try:
                         days_ahead = int(args[0])
@@ -482,15 +482,15 @@ def main():
                             book, days_ahead
                         )
                         if upcoming_birthdays:
-                            print("Upcoming birthdays:")
+                            print(Colorizer.info("Upcoming birthdays:"))
                             for ub in upcoming_birthdays:
-                                print(f'{ub["name"]} on {ub["congratulation_date"]}.')
+                                print(Colorizer.info(f'{ub["name"]} on {ub["congratulation_date"]}.'))
                         else:
-                            print(
+                            print(Colorizer.info(
                                 f"There are no upcoming birthdays in the next {days_ahead} days."
-                            )
+                            ))
                     except ValueError:
-                        print("Error: Please specify a valid number of days.")
+                        print(Colorizer.info("Please specify a valid number of days."))
 
             elif command == "del_birthday":
                 if not args:
@@ -671,7 +671,7 @@ def main():
                 command_help()
 
             elif command == "add_note":
-                title = input("Input the name of the note: ").strip()
+                title = input("Input the title of the note: ").strip()
                 content = input("Input the content of the note: ")
                 tags_input = input("Input tags separated by commas: ").strip()
                 tags = tags_input.split(",") if tags_input else None

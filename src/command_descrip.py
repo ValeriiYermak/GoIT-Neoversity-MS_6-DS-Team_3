@@ -11,7 +11,7 @@ def command_help():
     commands_description = [
         ("help", "help", "Display a list of available commands with details."),
         ("hello", "hello", "Greet and interact with the bot."),
-        ("cancel or exit", "close or exit", "Terminate the bot session."),
+        ("close or exit", "close or exit", "Terminate the bot session."),
         (
             "add-contact",
             "add-contact [name] [phone] [phone2] [birthday] [email] [address]",
