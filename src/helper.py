@@ -472,6 +472,7 @@ def main():
 
             elif command == "show_upcoming_birthdays":
                 if len(args) < 1:
+
                     print(Colorizer.error("Please specify the number of days after the command."))
                 else:
                     try:
@@ -488,6 +489,7 @@ def main():
                                 f"There are no upcoming birthdays in the next {days_ahead} days."
                             ))
                     except ValueError:
+
                         print(Colorizer.error("Please specify a valid number of days."))
 
             elif command == "del_birthday":
