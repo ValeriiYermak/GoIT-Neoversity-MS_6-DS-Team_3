@@ -1,4 +1,4 @@
-
+"""Module with the class Notes"""
 class Note:
     def __init__(self, title, content, tags=None):
         self.title = title
