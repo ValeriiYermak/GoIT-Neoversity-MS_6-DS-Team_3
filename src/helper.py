@@ -490,11 +490,11 @@ def main():
                                 f"There are no upcoming birthdays in the next {days_ahead} days."
                             ))
                     except ValueError:
-                        print(Colorizer.error("Error: Please specify a valid number of days."))
+                        print(Colorizer.error("Please specify a valid number of days."))
 
             elif command == "del_birthday":
                 if not args:
-                    print(Colorizer.error("Error: Input a name."))
+                    print(Colorizer.error("Input a name."))
                     continue
                 name = args[0]
                 contact = book.find_address(name)
