@@ -292,8 +292,6 @@ def main():
                     )
 
             elif command == "change_name":
-                # print(Colorizer.info("To change a name, provide the old name and the new name, separated by a '|' symbol."))
-                # print(Colorizer.info("Example: old_name | new_name"))
 
                 if len(args) < 2 or "|" not in " ".join(args):
                     print(Colorizer.error("Error: Provide old name and new name."))
@@ -395,7 +393,7 @@ def main():
                     print(Colorizer.info("No contacts found."))
                 else:
                     for contact in book.values():
-                        print(contact)
+                        print(Colorizer.info(contact))
 
             elif command == "del_contact":  # Delete contact
                 if not args:
@@ -434,7 +432,7 @@ def main():
                 name = args[0]
                 contact = book.find_address(name)
                 if contact:
-                    print(Birthday.show_birthday_of_contact(contact))
+                    print(Colorizer.info(Birthday.show_birthday_of_contact(contact)))
                 else:
                     print(Colorizer.error(f"Error: Contact '{name}' not found."))
 
@@ -534,7 +532,7 @@ def main():
                 name = args[0]
                 contact = book.find_address(name)
                 if contact:
-                    print(Email.find_email(contact))
+                    print(Colorizer.info(Email.find_email(contact)))
                 else:
                     print(Colorizer.error(f"Error: Contact '{name}' not found."))
 
