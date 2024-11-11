@@ -671,7 +671,7 @@ def main():
                 command_help()
 
             elif command == "add_note":
-                title = input("Input the name of the note: ").strip()
+                title = input("Input the title of the note: ").strip()
                 content = input("Input the content of the note: ")
                 tags_input = input("Input tags separated by commas: ").strip()
                 tags = tags_input.split(",") if tags_input else None
