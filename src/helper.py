@@ -67,7 +67,7 @@ COMMANDS = [
     "help",
     "hello",
     "exit",
-    "cancel",
+    "close",
     "add_contact",
     "add_birthday",
     "add_email",
